@@ -28,7 +28,8 @@ model.add(Convolution2D(
 ))
 
 model.add(MaxPooling2D(2, 2, 'same', data_format='channels_first'))
-
+model.add(Convolution2D(64, 5, strides=1, padding='same', data_format='channels_first'))
+model.add(MaxPooling2D(2, 2, 'same', data_format='channels_first'))
 model.add(Flatten())
 model.add(Dense(10,activation='softmax'))
 adam = Adam(lr=1e-3)
