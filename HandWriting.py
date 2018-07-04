@@ -15,3 +15,33 @@ y_train = np_utils.to_categorical(y_train, num_classes=10)
 y_test = np_utils.to_categorical(y_test, num_classes=10)
 
 print (X_test.shape)
+model = Sequential()
+
+# Conv layer 1 output shape (32, 28, 28)
+model.add(Convolution2D(
+    batch_input_shape=(None, 1, 28, 28),
+    filters=32,
+    kernel_size=5,
+    strides=1,
+    padding='same',    
+    data_format='channels_first',
+))
+
+model.add(MaxPooling2D(2, 2, 'same', data_format='channels_first'))
+
+model.add(Flatten())
+model.add(Dense(10,activation='softmax'))
+adam = Adam(lr=1e-3)
+
+# show model
+
+model.summary()
+
+model.compile(optimizer=adam,
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+print('Training ------------')
+# Another way to train the model
+model.fit(X_train, y_train, epochs=5, batch_size=64)
+model.save('HW.py')
